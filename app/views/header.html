@@ -4,14 +4,29 @@
   <head>
     <title>{{.title}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.css">
-    <link rel="shortcut icon" type="image/png" href="/public/images/favicon.png">
-    <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">	
+    <link rel="shortcut icon" type="image/png" href="/public/images/favicon.png">    
     {{range .moreStyles}}
       <link rel="stylesheet" type="text/css" href="/public/{{.}}">
     {{end}}
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap-responsive.min.css">
     {{range .moreScripts}}
       <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
     {{end}}
   </head>
   <body>
+  
+    <div class="container">
+  
+      <div class="masthead">		
+	    <ul class="nav nav-pills pull-right">
+          <li><a href="/"><i class="icon-home"></i> Home</a></li>
+          <li><a href="/about"><i class="icon-question-sign"></i> About</a></li>
+        </ul>
+        <h1>{{.title}}</h1>
+	  </div>
+	  <div class="row">
+        <div class="span12">
+         {{template "flash.html" .}}
+        </div>
+      </div>

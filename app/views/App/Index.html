@@ -1,23 +1,24 @@
-{{set . "title" "Home"}}
+{{set . "title" "PDF/Eh? - Server"}}
 {{template "header.html" .}}
 
-<header class="hero-unit" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <div class="hero-text">
-        <h1>It works!</h1>
-        <p></p>
+	  
+	<div class="row">
+      <div class="span12">
+        {{template "flash.html" .}}
       </div>
     </div>
-  </div>
-</header>
-
-<div class="container">
-  <div class="row">
-    <div class="span6">
-      {{template "flash.html" .}}
+	
+	<div class="row">
+      <div class="span12">
+        <p>Please enter the url of a publically available PDF document.
+		  <a href="/App/Result?pdf=http%3A%2F%2Fwww.pdfa.org%2Fwp-content%2Fuploads%2F2011%2F08%2FPDFA-in-a-Nutshell_1b.pdf">Or try an example.</a>
+		</p>
+		<form action="/App/Result" method="GET" class="form-inline">
+          <input type="text" name="pdf" />
+          <input type="submit" value="Submit!" />
+        </form>
+      </div>
     </div>
-  </div>
-</div>
+
 
 {{template "footer.html" .}}
