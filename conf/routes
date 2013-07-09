@@ -10,6 +10,10 @@ GET     /about                                  App.About
 
 GET     /result                                 App.Result
 
+GET     /editor                                 App.Editor
+
+GET     /api                                    Api.PublicPDFPublicValidator
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

@@ -35,12 +35,12 @@ type PDFASchemaValidationError struct {
 	Label string
 }
 
-type ValidationErrorDisplay struct {
-    NumberTimes int
-	Level string
+func (c App) Index() revel.Result {
+
+	return c.Render()
 }
 
-func (c App) Index() revel.Result {
+func (c App) Editor() revel.Result {
 
     file, err := ioutil.ReadFile("./errors.json")
     if err != nil {
@@ -76,7 +76,7 @@ func (c App) About() revel.Result {
 	return c.Render()
 }
 
-func (c App) Result(pdf, v1, v1_0, v1_0_1 string) revel.Result {
+func (c App) Result(pdf, validator string) revel.Result {
     
 	c.Validation.Required(pdf).Message("You must provide a url to a pdf.")
 	
@@ -98,7 +98,7 @@ func (c App) Result(pdf, v1, v1_0, v1_0_1 string) revel.Result {
 		return c.Redirect(App.Index)
 	}
 	
-	if url.Scheme == ""{
+	if url.Scheme == "" {
 	    url.Scheme = "http"
 	}
 	
@@ -154,6 +154,45 @@ func (c App) Result(pdf, v1, v1_0, v1_0_1 string) revel.Result {
 		return c.Redirect(App.Index)
 	}
 	
+	validationUrl, err := url.Parse(validator)
+	if err != nil {
+	    c.Validation.Error("Error with Validator URL", err)
+    }
+	
+	//TODO: messy. Maybe defer? Can defer contains returns?
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(App.Index)
+	}
+	
+	if validationUrl.Scheme == "" {
+	    validationUrl.Scheme = "http"
+	}
+	
+	validatorResult, err := http.Get(validationUrl.String())
+    if err != nil {
+	    c.Validation.Error("HTTP Error with Validator URL", err)
+    }
+	
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(App.Index)
+	}	
+	
+	if validatorResult.StatusCode != http.StatusOK  {
+	    c.Validation.Error("Error loading validator file.", validatorResult.Status)
+	}
+	
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(App.Index)
+	}
+	
+	defer validatorResult.Body.Close()	
+	
 	out, _ := exec.Command("java", "-jar", "preflight-app-1.8.2.jar", temp.Name()).Output()
 	
 	outputMap := make(map[string]int)	
@@ -163,8 +202,8 @@ func (c App) Result(pdf, v1, v1_0, v1_0_1 string) revel.Result {
 	for _, line := range outSlice {
 	    elem, present := outputMap[line]
 		if present == true {
-		    outputMap[line] = elem+1
-		} else if strings.TrimSpace(line) != "" {
+			outputMap[line] = elem+1
+		} else if strings.TrimSpace(line) != "" {		
             outputMap[line] = 1
 		}
     }

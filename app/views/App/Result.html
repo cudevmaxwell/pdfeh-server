@@ -5,8 +5,8 @@
       <div class="span12">
         <p>Results: {{.pdf}}</p>
 		<p>{{.resString}}</p>
-		{{range $line, $number := .outputMap}}
-          <p>{{$line}} [{{$number}}]</p>
+		{{range $line, $numTimes := .outputMap}}
+          <p>{{$line}} [{{$numTimes}}]</p>
         {{end}}
       </div>
     </div>

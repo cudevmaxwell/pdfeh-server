@@ -1,0 +1,77 @@
+ {{set . "title" "PDF/Eh? - Editor"}}
+{{template "header.html" .}}
+			
+          
+		
+		  {{range .errorList.Categories}}
+		    <div class="row-fluid"> 
+		      <div class="span12">
+		        <h2 class="muted">{{.Name}}</h2>
+			  </div>
+		    </div>
+		    {{range .Errors}}
+		    <div class="row-fluid">
+		      <div class="span8">
+			    <label for="{{.Code}}"><strong>{{.Code}}</strong> {{.Label}}</label>
+			  </div>
+			  <div class="span4">
+			    <select name="V.v{{replace .Code "." "_" -1}}" id="{{.Code}}">
+                    <option value="pass" selected>Pass</option> 
+                    <option value="warn">Warn</option>
+                    <option value="fail">Fail</option>
+                  </select>
+			  </div>		  
+		    {{end}}
+	        {{range .SubCategories}}
+			  <div class="row-fluid"> 
+		        <div class="offset1 span11">
+		          <h3 class="muted">{{.Name}}</h3>
+			    </div>
+		      </div>
+		      {{range .Errors}}
+		      <div class="row-fluid">
+		        <div class="offset1 span7">
+			      <label for="{{.Code}}"><strong>{{.Code}}</strong> {{.Label}}</label>
+			    </div>
+			    <div class="span4">
+			      <select name="V.v{{replace .Code "." "_" -1}}" id="{{.Code}}">
+                      <option value="pass" selected>Pass</option> 
+                      <option value="warn">Warn</option>
+                      <option value="fail">Fail</option>
+                    </select>
+			    </div>
+		      		  
+		      {{end}}
+              {{range .SubCategories}}
+			  	<div class="row-fluid"> 
+		          <div class="offset1 span11">
+			      </div>
+		        </div>
+		        {{range .Errors}}
+		        <div class="row-fluid">
+		          <div class="offset2 span6">
+			        <label for="{{.Code}}"><strong>{{.Code}}</strong> {{.Label}}</label>
+			      </div>
+			      <div class="span4">
+			        <select name="V.v{{replace .Code "." "_" -1}}" id="{{.Code}}">
+                        <option value="pass" selected>Pass</option> 
+                        <option value="warn">Warn</option>
+                        <option value="fail">Fail</option>
+                      </select>
+			      </div>
+		        </div>		  
+		        {{end}}			
+			  {{end}}
+            </div>			  
+			{{end}}
+		    </div>			
+		  {{end}}
+		     
+          <div class="row-fluid"> 
+		    <div class="offset6 span6">
+		      <input class="btn btn-primary" type="submit" value="Submit!" />
+			</div>
+		  </div>
+		  
+		  
+{{template "footer.html" .}}
