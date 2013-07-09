@@ -10,21 +10,19 @@ import (
 	"os/exec"
 	"os"
 	"encoding/json"
-	"fmt"
 )
 
 type Api struct {
 	*revel.Controller
 }
 
-func checkUser(c *revel.Controller) revel.Result {
-	fmt.Printf("E: %+v\n", c.Response.Out)
+func addHeaderCORS(c *revel.Controller) revel.Result {
+	c.Response.Out.Header().Add("Access-Control-Allow-Origin","*")
 	return nil
 }
 
-
 func init() {
-    revel.InterceptFunc(checkUser, revel.AFTER, &Api{})
+    revel.InterceptFunc(addHeaderCORS, revel.AFTER, &Api{})
 	revel.TemplateFuncs["replace"] = strings.Replace
 }
 
