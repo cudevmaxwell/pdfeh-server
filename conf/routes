@@ -8,6 +8,8 @@ GET     /                                       App.Index
 
 GET     /about                                  App.About
 
+GET     /result                                 App.Result
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

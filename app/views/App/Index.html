@@ -1,19 +1,13 @@
 {{set . "title" "PDF/Eh? - Server"}}
 {{template "header.html" .}}
 
-	  
-	<div class="row">
-      <div class="span12">
-        {{template "flash.html" .}}
-      </div>
-    </div>
 	
 	<div class="row">
       <div class="span12">
         <p>Please enter the url of a publically available PDF document.
-		  <a href="/App/Result?pdf=http%3A%2F%2Fwww.pdfa.org%2Fwp-content%2Fuploads%2F2011%2F08%2FPDFA-in-a-Nutshell_1b.pdf">Or try an example.</a>
+		  <a href="/result?pdf=http%3A%2F%2Fwww.pdfa.org%2Fwp-content%2Fuploads%2F2011%2F08%2FPDFA-in-a-Nutshell_1b.pdf">Or try an example.</a>
 		</p>
-		<form action="/App/Result" method="GET" class="form-inline">
+		<form action="/result" method="GET" class="form-inline">
           <input type="text" name="pdf" />
           <input type="submit" value="Submit!" />
         </form>
