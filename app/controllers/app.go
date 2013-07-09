@@ -12,6 +12,10 @@ import (
 	"encoding/json"
 )
 
+func init() {
+	revel.TemplateFuncs["replace"] = strings.Replace
+}
+
 type App struct {
 	*revel.Controller
 }
@@ -29,6 +33,11 @@ type PDFASchemaValidationErrorCategory struct {
 type PDFASchemaValidationError struct {
 	Code string
 	Label string
+}
+
+type ValidationErrorDisplay struct {
+    NumberTimes int
+	Level string
 }
 
 func (c App) Index() revel.Result {
@@ -67,7 +76,7 @@ func (c App) About() revel.Result {
 	return c.Render()
 }
 
-func (c App) Result(pdf string) revel.Result {
+func (c App) Result(pdf, v1, v1_0, v1_0_1 string) revel.Result {
     
 	c.Validation.Required(pdf).Message("You must provide a url to a pdf.")
 	
