@@ -12,6 +12,8 @@ GET     /result                                 App.Result
 
 GET     /editor                                 App.Editor
 
+GET     /example                                App.Example
+
 GET     /api                                    Api.PublicPDFPublicValidator
 
 

@@ -13,12 +13,19 @@ import (
 	"fmt"
 )
 
-func init() {
-	revel.TemplateFuncs["replace"] = strings.Replace
-}
-
 type Api struct {
 	*revel.Controller
+}
+
+func checkUser(c *revel.Controller) revel.Result {
+	fmt.Printf("E: %+v\n", c.Response.Out)
+	return nil
+}
+
+
+func init() {
+    revel.InterceptFunc(checkUser, revel.AFTER, &Api{})
+	revel.TemplateFuncs["replace"] = strings.Replace
 }
 
 type Validator struct {
@@ -47,28 +54,23 @@ type ResultError struct {
     Error string
 }
 
-
 func (c Api) PublicPDFPublicValidator(pdf, validator string) revel.Result {
-
-    //result = new(Result)
 
     error := *c.Validation.Required(pdf)
 	if !error.Ok {
 	    return c.RenderJson(ResultError{"You must provide a url to a pdf."})
 	}
 	
-	fmt.Println(pdf)
-	
-	url, err := url.Parse(pdf)
+	pdfUrl, err := url.Parse(pdf)
 	if err != nil {
 	    return c.RenderJson(ResultError{"Error with PDF URL."})
     }
 		
-	if url.Scheme == "" {
-	    url.Scheme = "http"
+	if pdfUrl.Scheme == "" {
+	    pdfUrl.Scheme = "http"
 	}
 	
-	resp, err := http.Get(url.String())
+	resp, err := http.Get(pdfUrl.String())
     if err != nil {
 	    return c.RenderJson(ResultError{"Error GETing PDF."})
     }
@@ -99,15 +101,17 @@ func (c Api) PublicPDFPublicValidator(pdf, validator string) revel.Result {
 	validatorToUse := new(Validator)
 	
 	error = *c.Validation.Required(validator)
-	if error.Ok {
+	
+	if error.Ok {	
+
 	    validationUrl, err := url.Parse(validator)
 	    if err != nil {
 	        return c.RenderJson(ResultError{"Error with validator url."})
         }
-	    
+		    
 	    if validationUrl.Scheme == "" {
 	        validationUrl.Scheme = "http"
-	    }
+	    }		
 	    
 	    validatorResult, err := http.Get(validationUrl.String())
         if err != nil {
@@ -134,6 +138,8 @@ func (c Api) PublicPDFPublicValidator(pdf, validator string) revel.Result {
 	}
 		
 	result := new(Result)
+	
+	result.Level = "pass"
 	
 	result.URL = pdf
 	
@@ -163,6 +169,16 @@ func (c Api) PublicPDFPublicValidator(pdf, validator string) revel.Result {
 		}
 	    result.ValidationErrors = append(result.ValidationErrors, ValidationError{code,text,level,numberOfTimes})
 	}
- 
+	
+	for _, validatorError := range result.ValidationErrors {
+		if validatorError.Level == "fail"  {
+		   result.Level = "fail"
+		}  else if validatorError.Level == "warn" && result.Level == "pass"  {
+		   result.Level = "warn"
+		}
+	}
+	
+	
+	
 	return c.RenderJson(result)
 }
