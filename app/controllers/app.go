@@ -23,6 +23,7 @@ type PDFSchemaValidatorList struct {
 type PDFASchemaValidationErrorCategory struct {
     Errors []PDFASchemaValidationError
 	Name string
+	SubCategories []PDFASchemaValidationErrorCategory
 }
 
 type PDFASchemaValidationError struct {
