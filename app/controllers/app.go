@@ -9,14 +9,57 @@ import (
 	"os/exec"
 	"os"
 	"strings"
+	"encoding/json"
 )
 
 type App struct {
 	*revel.Controller
 }
 
+type PDFSchemaValidatorList struct {
+    Categories []PDFASchemaValidationErrorCategory
+}
+
+type PDFASchemaValidationErrorCategory struct {
+    Errors []PDFASchemaValidationError
+	Name string
+}
+
+type PDFASchemaValidationError struct {
+	Code string
+	Label string
+}
+
 func (c App) Index() revel.Result {
-	return c.Render()
+
+    file, err := ioutil.ReadFile("./errors.json")
+    if err != nil {
+	    c.Validation.Error("Cannot open validation errors json file", err)
+    }
+	
+	//TODO: messy. Maybe defer? Can defer contains returns?
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Render()
+	}
+	
+	
+    var errorList PDFSchemaValidatorList
+    err = json.Unmarshal(file, &errorList)
+	
+	if err != nil {
+	    c.Validation.Error("Error in json file.", err)
+    }
+	
+	//TODO: messy. Maybe defer? Can defer contains returns?
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Render()
+	}
+
+	return c.Render(errorList)
 }
 
 func (c App) About() revel.Result {
@@ -102,7 +145,19 @@ func (c App) Result(pdf string) revel.Result {
 	}
 	
 	out, _ := exec.Command("java", "-jar", "preflight-app-1.8.2.jar", temp.Name()).Output()
-
-	outSlice := strings.Split(string(out), "\n")
-	return c.Render(pdf, outSlice)
+	
+	outputMap := make(map[string]int)	
+	
+	outSlice := strings.Split(string(out), "\n")[1:]
+	
+	for _, line := range outSlice {
+	    elem, present := outputMap[line]
+		if present == true {
+		    outputMap[line] = elem+1
+		} else if strings.TrimSpace(line) != "" {
+            outputMap[line] = 1
+		}
+    }
+	
+	return c.Render(pdf, outputMap)
 }

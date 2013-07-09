@@ -4,14 +4,51 @@
 	
 	<div class="row">
       <div class="span12">
-        <p>Please enter the url of a publically available PDF document.
-		  <a href="/result?pdf=http%3A%2F%2Fwww.pdfa.org%2Fwp-content%2Fuploads%2F2011%2F08%2FPDFA-in-a-Nutshell_1b.pdf">Or try an example.</a>
-		</p>
-		<form action="/result" method="GET" class="form-inline">
-          <input type="text" name="pdf" />
-          <input type="submit" value="Submit!" />
-        </form>
-      </div>
+		  
+		<form action="/result" method="GET" class="form-horizontal">
+		
+		  
+            
+			
+          
+		
+		  {{range .errorList.Categories}}
+		  <div class="row"> 
+		    <div class="span12">
+		      <h2 class="muted">{{.Name}}</h2>
+			</div>
+		  </div>
+		  {{range .Errors}}
+		  <div class="row">
+		    <div class="offset1 span5">
+			  <label for="{{.Code}}"><strong>{{.Code}}</strong> {{.Label}}</label>
+			</div>
+			<div class="span6">
+			  <select name="{{.Code}}" id="{{.Code}}">
+                  <option value="{{.Code}}pass" selected>Pass</option> 
+                  <option value="{{.Code}}warn">Warn</option>
+                  <option value="{{.Code}}fail">Fail</option>
+                </select>
+			</div>
+		  </div>
+		  {{end}}
+		  {{end}}
+		  
+		  <div class="control-group">
+            <label class="control-label" for="pdf">PDF document URL</label>
+              <div class="controls">
+                <input type="text" name="pdf" id="pdf"/>
+              </div>
+          </div>        
+		  <div class="control-group">
+            <div class="controls">
+              <input class="btn btn-primary" type="submit" value="Submit!" />
+		      <a class="btn" href="/result?pdf=http%3A%2F%2Fwww.pdfa.org%2Fwp-content%2Fuploads%2F2011%2F08%2FPDFA-in-a-Nutshell_1b.pdf"> Or try an example.</a>
+            </div>
+          </div> 
+		</form>
+		
+	  </div>
     </div>
 
 
