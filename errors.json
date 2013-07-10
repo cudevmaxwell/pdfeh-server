@@ -1,114 +1,96 @@
 {"Categories":
   [
-    {
-      "Name": "Syntax Error", 
-      "Errors":
-        [	
-          {
-	        "Label": "Too many entries in a dictionary object.",
-	        "Code": "1.0.1"
-	      },
-	      {
-	        "Label": "Too many elements in an array object.",
-	        "Code": "1.0.2"
-	      }, 
-	      {
-	        "Label": "The name length is too long.",
-	        "Code": "1.0.3"
-	      },
-	      {
-	        "Label": "The literal string is too long.",
-	        "Code": "1.0.4"
-	      },
-	      {
-	        "Label": "The hexa string is too long.",
-	        "Code": "1.0.5"
-	      },
-	      {
-	        "Label": "The number is out of Range ( ex : greatter than 2^31-1).",
-	        "Code": "1.0.6"
-	      },
-	      {
-	        "Label": "A dictionary key isn't a name.",
-	        "Code": "1.0.7"
-	      },
-	      {
-	        "Label": "The language declared doesn't match with the RFC1766.",
-	        "Code": "1.0.8"
-	      },
-	      {
-	        "Label": "There are too many objects.",
-	        "Code": "1.0.9"
-	      },
-	      {
-	        "Label": "CID too long.",
-	        "Code": "1.0.10"
-	      },
-	      {
-	        "Label": "Hexa string shall contain even number of non white space char.",
-	        "Code": "1.0.11"
-	      },
-	      {
-	        "Label": "Hexa string contain non hexadecimal characters.",
-	        "Code": "1.0.12"
-	      },	      
+    { "Name": "Syntax Error",
+	  "Errors":
+	    [
 		  {
-	        "Label": "An object is missing from the document.",
-	        "Code": "1.0.13"
-	      },		
-		  {
-	        "Label": "An object has an invalid offset.",
-	        "Code": "1.0.14"
-	      },		 
-		  {
-	        "Label": "An object has an invalid offset.",
-	        "Code": "1.0.14"
+	        "Label": "Syntax Error",
+	        "Code": "1"
 	      }
+		],
+	  "SubCategories":
+	    [
+		  {
+		    "Name": "Common",
+			"Errors": 
+			  [
+			    {
+	              "Label": "Syntax Error - Common, can occur in any part of the pdf",
+	              "Code": "1.0"
+	            }
+			  ],
+			"SubCategories":
+			  [
+			    {
+				  "Name": "Errors",
+				  "Errors":
+				    [
+                      {
+	                    "Label": "Too many entries in a dictionary object.",
+	                    "Code": "1.0.1"
+	                  },
+	                  {
+	                    "Label": "Too many elements in an array object.",
+	                    "Code": "1.0.2"
+	                  }, 
+	                  {
+	                    "Label": "The name length is too long.",
+	                    "Code": "1.0.3"
+	                  },
+	                  {
+	                    "Label": "The literal string is too long.",
+	                    "Code": "1.0.4"
+	                  },
+	                  {
+	                    "Label": "The hexa string is too long.",
+	                    "Code": "1.0.5"
+	                  },
+	                  {
+	                    "Label": "The number is out of Range ( ex : greatter than 2^31-1).",
+	                    "Code": "1.0.6"
+	                  },
+	                  {
+	                    "Label": "A dictionary key isn't a name.",
+	                    "Code": "1.0.7"
+	                  },
+	                  {
+	                    "Label": "The language declared doesn't match with the RFC1766.",
+	                    "Code": "1.0.8"
+	                  },
+	                  {
+	                    "Label": "There are too many objects.",
+	                    "Code": "1.0.9"
+	                  },
+	                  {
+	                    "Label": "CID too long.",
+	                    "Code": "1.0.10"
+	                  },
+	                  {
+	                    "Label": "Hexa string shall contain even number of non white space char.",
+	                    "Code": "1.0.11"
+	                  },
+	                  {
+	                    "Label": "Hexa string contain non hexadecimal characters.",
+	                    "Code": "1.0.12"
+	                  },	      
+		              {
+	                    "Label": "An object is missing from the document.",
+	                    "Code": "1.0.13"
+	                  },		
+		              {
+	                    "Label": "An object has an invalid offset.",
+	                    "Code": "1.0.14"
+	                  },		 
+		              {
+	                    "Label": "An object has an invalid offset.",
+	                    "Code": "1.0.14"
+	                  }
+					]
+			    }
+		      ]
+			}
         ]
-	}, 
-	{
-      "Name": "Syntax Error: Header Section", 
-	  "Errors":
-	    [
-		  {
-		    "Label": "The first character is incorrect.",
-			"Code": "1.1.1"
-	      },
-		  {
-		    "Label": "The file type is incorrect.",
-			"Code": "1.1.2"
-		  }
-		]
-    },
-	{
-      "Name": "Syntax Error: Body Section", 
-	  "Errors":
-	    [
-		  {
-		    "Label": "The first character is incorrect.",
-			"Code": "1.2.1"
-	      },
-		  {
-		    "Label": "The file type is incorrect.",
-			"Code": "1.2.2"
-	      },
-		  {
-		    "Label": "The file type is incorrect.",
-			"Code": "1.2.3"
-	      },
-		  {
-		    "Label": "The file type is incorrect.",
-			"Code": "1.2.4"
-	      },
-		  {
-		    "Label": "The file type is incorrect.",
-			"Code": "1.2.5"
-	      },
-		  {
-		    "Label": "The file type is incorrect.",
-			"Code": "1.2.6"
-		  }
-		]
-    }	
+	}
   ]
 }
+	
